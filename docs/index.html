@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HourPercentClock Web</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div class="title-group">
+        <h1>HourPercentClock</h1>
+        <p class="subtitle">Visualize your day in percentages</p>
+      </div>
+
+      <!-- 🔧 header 上的两个开关：主题 & 详细/精简 -->
+      <div class="header-controls">
+        <div class="theme-toggle control-group">
+          <span>Dark</span>
+          <label class="switch">
+            <input type="checkbox" id="themeToggle" />
+            <span class="slider"></span>
+          </label>
+          <span>Light</span>
+        </div>
+
+        <div class="mode-toggle control-group">
+          <span>Detailed</span>
+          <label class="switch">
+            <input type="checkbox" id="modeToggle" />
+            <span class="slider"></span>
+          </label>
+          <span>Compact</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <!-- Left: Circular progress -->
+      <section class="visual-panel">
+        <div class="clock-card glass">
+          <div class="datetime" id="currentDatetime">--</div>
+
+          <svg class="progress-ring" viewBox="0 0 200 200">
+            <!-- Outer ring: day progress (track + progress) -->
+            <circle
+              class="ring-track"
+              cx="100"
+              cy="100"
+              r="80"
+            ></circle>
+            <circle
+              class="ring-progress ring-day"
+              id="dayRing"
+              cx="100"
+              cy="100"
+              r="80"
+            ></circle>
+
+            <!-- Inner ring: hour progress (track + progress) -->
+            <circle
+              class="ring-track"
+              cx="100"
+              cy="100"
+              r="60"
+            ></circle>
+            <circle
+              class="ring-progress ring-hour"
+              id="hourRing"
+              cx="100"
+              cy="100"
+              r="60"
+            ></circle>
+
+            <!-- Center text -->
+            <text
+              id="centerMain"
+              x="50%"
+              y="50%"
+              text-anchor="middle"
+              dominant-baseline="central"
+              class="center-main"
+            >--%</text>
+            <text
+              id="centerSub"
+              x="50%"
+              y="62%"
+              text-anchor="middle"
+              class="center-sub"
+            >Day Progress</text>
+          </svg>
+        </div>
+      </section>
+
+      <!-- Right: Info & settings -->
+      <section class="info-panel">
+        <div class="card glass settings-card">
+          <h2>Settings</h2>
+          <div class="field">
+            <label for="birthdayInput">Birthday (YYYY-MM-DD)</label>
+            <input type="date" id="birthdayInput" />
+          </div>
+          <p class="hint">
+            Your birthday is stored locally in this browser using
+            <code>localStorage</code>.
+          </p>
+        </div>
+
+        <div class="card glass stats-card" id="statsCard">
+          <h2>Today’s Progress</h2>
+          <div class="stat-row">
+            <span>Hour progress</span>
+            <span id="hourProgressText">--%</span>
+          </div>
+          <div class="stat-row">
+            <span>Day progress</span>
+            <span id="dayProgressText">--%</span>
+          </div>
+          <div class="stat-row">
+            <span>Remaining of the day</span>
+            <span id="dayRemainingText">--%</span>
+          </div>
+
+          <h2>Life Timeline</h2>
+          <div class="stat-row">
+            <span>Days alive</span>
+            <span id="daysAliveText">--</span>
+          </div>
+          <div class="stat-row">
+            <span>Days to next 100-day milestone</span>
+            <span id="daysToNextMilestoneText">--</span>
+          </div>
+
+          <p class="note" id="birthdayNote">
+            Please set your birthday to see life-related statistics.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span>HourPercentClock Web · v1.0.0</span>
+      <span>Time format: ISO · YYYY-MM-DD (Mon) HH:MM:SS</span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

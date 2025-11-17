@@ -1,0 +1,402 @@
+:root {
+  /* 默认：Dark 主题 */
+  --bg: #050816;
+  --bg-card: rgba(15, 23, 42, 0.75);
+  --bg-card-soft: rgba(15, 23, 42, 0.85);
+  --border-subtle: rgba(148, 163, 184, 0.25);
+  --text-main: #e5e7eb;
+  --text-sub: #9ca3af;
+  --accent-hour: #38bdf8;
+  --accent-day: #a855f7;
+  --accent-soft: rgba(56, 189, 248, 0.4);
+  --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.8);
+  --radius-xl: 24px;
+  --transition-fast: 0.18s ease-out;
+  --transition-normal: 0.25s ease-out;
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", sans-serif;
+}
+
+/* 🌞 Light 主题：通过 body.light-theme 覆盖变量 */
+body.light-theme {
+  --bg: #f3f4f6;
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-card-soft: rgba(255, 255, 255, 0.98);
+  --border-subtle: rgba(148, 163, 184, 0.55);
+  --text-main: #111827;
+  --text-sub: #6b7280;
+  --accent-hour: #0ea5e9;
+  --accent-day: #6366f1;
+  --accent-soft: rgba(37, 99, 235, 0.25);
+  --shadow-soft: 0 18px 40px rgba(148, 163, 184, 0.4);
+}
+
+/* 全局 */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--text-main);
+  background:
+    radial-gradient(circle at top left, #1f2937 0, transparent 55%),
+    radial-gradient(circle at bottom right, #0f172a 0, transparent 50%),
+    var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+/* Light 模式下单独调一下背景渐变 */
+
+body.light-theme {
+  background:
+    radial-gradient(circle at top left, #e5e7eb 0, transparent 55%),
+    radial-gradient(circle at bottom right, #cbd5f5 0, transparent 50%),
+    var(--bg);
+}
+
+/* App Layout */
+
+.app {
+  width: 100%;
+  max-width: 1120px;
+  margin: 16px;
+  padding: 18px 20px 16px;
+  border-radius: 28px;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.9),
+    rgba(15, 23, 42, 0.98)
+  );
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Light 模式下 app 背景更亮一点 */
+
+body.light-theme .app {
+  background: linear-gradient(
+    135deg,
+    rgba(249, 250, 251, 0.98),
+    rgba(243, 244, 246, 0.96)
+  );
+}
+
+/* Header */
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.title-group h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+}
+
+/* 🔧 Header 控件（主题开关 + 模式开关） */
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+}
+
+/* Switch 共用样式 */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: rgba(148, 163, 184, 0.35);
+  transition: var(--transition-fast);
+  border-radius: 999px;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  top: 3px;
+  background-color: #f9fafb;
+  transition: var(--transition-fast);
+  border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.8);
+}
+
+.switch input:checked + .slider {
+  background-color: rgba(129, 140, 248, 0.7);
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(20px);
+}
+
+/* Main layout */
+
+.app-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+/* Cards */
+
+.glass {
+  background: var(--bg-card);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-soft);
+}
+
+.clock-card {
+  padding: 18px 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.settings-card,
+.stats-card {
+  padding: 16px 16px 14px;
+}
+
+.card h2 {
+  margin: 0 0 10px;
+  font-size: 0.98rem;
+}
+
+/* Datetime */
+
+.datetime {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-sub);
+  text-align: center;
+}
+
+/* SVG ring */
+
+.progress-ring {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  display: block;
+}
+
+.ring-track {
+  fill: none;
+  stroke: rgba(30, 64, 175, 0.35);
+  stroke-width: 10;
+}
+
+body.light-theme .ring-track {
+  stroke: rgba(148, 163, 184, 0.5);
+}
+
+.ring-progress {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  stroke-dasharray: 0 999;
+  stroke-dashoffset: 0;
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.45));
+}
+
+.ring-day {
+  stroke: var(--accent-day);
+}
+
+.ring-hour {
+  stroke: var(--accent-hour);
+}
+
+.center-main {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.center-sub {
+  font-size: 0.9rem;
+  fill: var(--text-sub);
+}
+
+/* Fields & stats */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.field label {
+  font-size: 0.85rem;
+  color: var(--text-sub);
+}
+
+.field input[type="date"] {
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  border-radius: 999px;
+  padding: 6px 12px;
+  color: var(--text-main);
+  font-size: 0.9rem;
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+body.light-theme .field input[type="date"] {
+  background: #f9fafb;
+  border-color: rgba(148, 163, 184, 0.8);
+}
+
+.field input[type="date"]:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
+}
+
+.hint {
+  margin: 4px 0 0;
+  font-size: 0.75rem;
+  color: var(--text-sub);
+}
+
+.hint code {
+  font-size: 0.75rem;
+}
+
+/* Stats */
+
+.stats-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.88rem;
+  padding: 4px 0;
+}
+
+.stat-row span:first-child {
+  color: var(--text-sub);
+}
+
+.stat-row span:last-child {
+  font-variant-numeric: tabular-nums;
+}
+
+.note {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: var(--text-sub);
+}
+
+/* Footer */
+
+.app-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-sub);
+  padding: 0 4px;
+}
+
+/* Compact mode：隐藏部分 Today’s Progress */
+
+body.compact .stats-card h2:nth-of-type(1),
+body.compact .stats-card .stat-row:nth-of-type(1),
+body.compact .stats-card .stat-row:nth-of-type(2),
+body.compact .stats-card .stat-row:nth-of-type(3) {
+  display: none;
+}
+
+body.compact .stats-card h2:nth-of-type(2) {
+  margin-top: 0;
+}
+
+/* Small screens */
+
+@media (max-width: 768px) {
+  .app {
+    margin: 10px;
+    padding: 14px 12px 10px;
+  }
+
+  .app-main {
+    grid-template-columns: 1fr;
+  }
+
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-controls {
+    justify-content: flex-start;
+  }
+
+  .app-footer {
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-start;
+  }
+}
